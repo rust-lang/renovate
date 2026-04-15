@@ -1,0 +1,8 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Recommended rust-lang preset combining the actions and lockfile presets.",
+  "extends": [
+    "github>rust-lang/renovate:actions",
+    "github>rust-lang/renovate:lockfile"
+  ]
+}

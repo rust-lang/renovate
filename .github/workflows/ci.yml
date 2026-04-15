@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Validate presets
+        run: npm exec --yes --package renovate@43 -- renovate-config-validator --strict --no-global *.json
+
+  zizmor:
+    name: Zizmor
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Run zizmor
+        uses: zizmorcore/zizmor-action@71321a20a9ded102f6e9ce5718a2fcec2c4f70d8 # v0.5.2
+        with:
+          persona: pedantic
+          # Don't use GitHub advanced security.
+          # Instead, fail if there's a security issue.
+          advanced-security: false
+
+  check-links:
+    name: Check links
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@8646ba30535128ac92d33dfc9133794bfdd9b411 # v2.8.0
+        env:
+          # Set the GitHub token to avoid rate limits when checking GitHub links.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          fail: true
+          # Accept the HTTP status code 429 (Too Many Requests) to avoid failing the workflow
+          # when the rate limit is exceeded.
+          # lychee strictly validates fragments; Zulip fragments are JS-routed and lack HTML anchors,
+          # which leads to false failures. Strip Zulip fragments and check the base URL instead.
+          # See lychee issues: https://github.com/lycheeverse/lychee/issues/1791
+          args: |
+            --no-progress
+            --include-fragments
+            --accept '100..=103, 200..=299, 429'
+            --remap '(https://rust-lang\.zulipchat\.com[^#]*)#.* $1'
+            .
+
+  conclusion:
+    name: Conclusion
+    needs:
+      - validate
+      - zizmor
+    # !cancelled() executes the job regardless of whether the previous jobs passed, failed or get skipped.
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Conclusion
+        env:
+          # Store the JSON in an environment variable to avoid template injection.
+          NEEDS_JSON: ${{ toJson(needs) }}
+        run: |
+          # Print the dependent jobs to see them in the CI log
+          printf '%s\n' "$NEEDS_JSON" | jq -C
+          # Check if all jobs that we depend on (in the needs array) were successful.
+          printf '%s\n' "$NEEDS_JSON" | jq --exit-status 'all(.result == "success" or .result == "skipped")'

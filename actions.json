@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Weekly GitHub Actions updates with digest pinning and grouped PRs.",
+  "extends": [
+    "github>rust-lang/renovate:base",
+    "helpers:pinGitHubActionDigestsToSemver"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "extends": ["schedule:weekly"]
+    }
+  ]
+}
