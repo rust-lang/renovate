@@ -76,7 +76,7 @@ preset, which resolves to Monday before 4 AM.
 
 To override them in a repository:
 
-```json
+```json5
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>rust-lang/renovate"],
@@ -88,7 +88,7 @@ To override them in a repository:
       "matchManagers": ["github-actions"],
       "extends": ["schedule:monthly"]
     }
-  ]
+  ],
 }
 ```
 
@@ -101,9 +101,9 @@ To override them in a repository:
 The [minimum release age](https://docs.renovatebot.com/key-concepts/minimum-release-age/)
 option allows you to specify a minimum age for releases before Renovate considers them for updates.
 
-```json
+```json5
 {
-  "minimumReleaseAge": "7 days"
+  "minimumReleaseAge": "7 days",
 }
 ```
 
@@ -121,9 +121,9 @@ We might enable this option in the future.
 The [automerge](https://docs.renovatebot.com/configuration-options/#automerge)
 option tells renovate to automatically merge PRs when CI checks pass and there are no conflicts.
 
-```json
+```json5
 {
-  "automerge": true
+  "automerge": true,
 }
 ```
 
