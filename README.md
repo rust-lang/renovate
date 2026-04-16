@@ -113,6 +113,23 @@ We didn't set it as default because:
 
 We might enable this option in the future.
 
+### Automerge
+
+The [automerge](https://docs.renovatebot.com/configuration-options/#automerge)
+option tells renovate to automatically merge PRs when CI checks pass and there are no conflicts.
+
+```json
+{
+  "automerge": true
+}
+```
+
+> [!NOTE]
+> The `automerge` option is only available in the `renovate` GitHub App.
+> If you use `forking-renovate`, this option is not available. See the [forge](https://forge.rust-lang.org/infra/docs/renovate.html?highlight=renovate#1-install-the-renovate-github-app) for more details.
+
+Automerge is disabled by default.
+
 ## References
 
 - [Shareable Config Presets](https://docs.renovatebot.com/config-presets/)
