@@ -2,4 +2,24 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["github>rust-lang/renovate"],
   automerge: true,
+  packageRules: [
+    {
+      description: ["renovate"],
+      matchDepNames: ["renovate"],
+      matchManagers: ["custom.regex"],
+      matchUpdateTypes: ["major"]
+    }
+  ],
+  customManagers: [
+    {
+      customType: "regex",
+      depNameTemplate: "renovate",
+      packageNameTemplate: "renovatebot/renovate",
+      datasourceTemplate: "github-releases",
+      managerFilePatterns: ["/(^|/)ci\\.yml/"],
+      matchStrings: ["(?<depName>renovate)@(?<currentValue>\\d+)"],
+      versioningTemplate: "regex:^(?<major>\\d+)$",
+      extractVersionTemplate: "^(?<version>\\d+)"
+    }
+  ]
 }
