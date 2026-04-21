@@ -21,7 +21,7 @@ jobs:
           persist-credentials: false
 
       - name: Validate presets
-        run: npm exec --yes --package renovate@42 -- renovate-config-validator --strict --no-global *.json
+        run: npm exec --yes --package renovate@43 -- renovate-config-validator --strict --no-global *.json
 
   zizmor:
     name: Zizmor
