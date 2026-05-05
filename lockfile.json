@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Weekly lock file maintenance and suppression of non-breaking Rust, JavaScript, and TypeScript update PRs.",
+  "description": "Weekly lock file maintenance and suppression of non-breaking Rust, JavaScript, and Python update PRs.",
   "extends": ["github>rust-lang/renovate:base"],
   "lockFileMaintenance": {
     "enabled": true,
@@ -8,7 +8,7 @@
   },
   "packageRules": [
     {
-      "matchCategories": ["rust", "javascript", "typescript"],
+      "matchCategories": ["rust", "js", "python"],
       "matchJsonata": ["isBreaking != true"],
       "enabled": false
     }

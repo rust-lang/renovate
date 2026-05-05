@@ -33,7 +33,7 @@ If you want to learn how to customize Renovate's behavior, keep reading!
 - `actions`: enables GitHub Actions updates, pinning action digests to SemVer-compatible refs.
   All GitHub Actions updates are grouped into a single PR and scheduled weekly.
 - `lockfile`: enables weekly lock file updates (e.g. `cargo update`) and disables
-  PRs for non-breaking updates for Rust, JavaScript, and TypeScript packages.
+  PRs for non-breaking updates for Rust, JavaScript, and Python ecosystem packages.
   This is because lock file updates already include non-breaking updates.
   Breaking updates (e.g. `1.2.3` to `2.0.0`) are updated into separate PRs.
 - `default`: This is the recommended preset for most repositories in the Rust Project.
