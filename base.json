@@ -1,8 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Base rust-lang Renovate preset with recommended defaults and vulnerability alerts enabled.",
+  "description": "Base rust-lang Renovate preset with security update PRs enabled.",
   "extends": ["config:recommended"],
   "vulnerabilityAlerts": {
     "enabled": true
-  }
+  },
+  "packageRules": [
+    {
+      "matchCategories": ["rust", "js", "python"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "enabled": false
+    }
+  ]
 }

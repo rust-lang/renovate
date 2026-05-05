@@ -9,6 +9,10 @@
   "packageRules": [
     {
       "matchCategories": ["rust", "js", "python"],
+      "enabled": true
+    },
+    {
+      "matchCategories": ["rust", "js", "python"],
       "matchJsonata": ["isBreaking != true"],
       "enabled": false
     }
