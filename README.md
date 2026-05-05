@@ -11,7 +11,7 @@ To know more about Renovate and how to use it in repositories of the Rust Projec
 
 ## Quickstart
 
-To use the default preset, add the following to your Renovate configuration file
+To use the [`default` preset](#default), add the following to your Renovate configuration file
 (e.g. `.github/renovate.json5`):
 
 ```json
@@ -42,9 +42,13 @@ graph TD
 Extends [`config:recommended`](https://docs.renovatebot.com/presets-config/#configrecommended),
 and enables [vulnerability alert](https://docs.renovatebot.com/configuration-options/#vulnerabilityalerts) PRs.
 
-Note that to receive vulnerability alert PRs, an admin needs to enable the
-settings [Dependency graph](https://docs.github.com/en/code-security/concepts/supply-chain-security/about-the-dependency-graph)
-and [Dependabot alerts](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-security-and-analysis-settings-for-your-repository).
+This preset keeps the default behavior of Renovate: raise one PR per dependency update.
+If you think this is too noisy, have a look at the other presets and the [personalization](#personalization) section below.
+
+> [!NOTE]
+> To receive vulnerability alert PRs, an admin needs to enable the
+> settings [Dependency graph](https://docs.github.com/en/code-security/concepts/supply-chain-security/about-the-dependency-graph)
+> and [Dependabot alerts](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-security-and-analysis-settings-for-your-repository).
 
 ### `actions`
 
@@ -142,6 +146,49 @@ option tells renovate to automatically merge PRs when CI checks pass and there a
 > If you use `forking-renovate`, this option is not available. See the [forge](https://forge.rust-lang.org/infra/docs/renovate.html?highlight=renovate#1-install-the-renovate-github-app) for more details.
 
 Automerge is disabled by default.
+
+### Security only updates
+
+To disable any update except security ones, you can use
+[`matchPackageNames`](https://docs.renovatebot.com/configuration-options/#packagerulesmatchpackagenames)
+in your configuration file:
+
+```json5
+
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>rust-lang/renovate"],
+  "packageRules": [
+    {
+      "enabled": false,
+      "matchPackageNames": [
+        "*"
+      ]
+    }
+  ]
+}
+```
+
+Alternatively, you can disable only certain [categories](https://docs.renovatebot.com/modules/manager/#supported-managers)
+using [`matchCategories`](https://docs.renovatebot.com/configuration-options/#packagerulesmatchcategories).
+E.g. to disable updates for Rust and Javascript:
+
+```json5
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>rust-lang/renovate"],
+  "packageRules": [
+    {
+      "enabled": false,
+      "matchCategories": ["rust", "js"]
+    }
+  ]
+}
+```
+
+> [!NOTE]
+> Some projects won't report their security vulnerabilities.
+> So we recommend keeping dependencies up to date, without relying only on security updates.
 
 ## References
 
