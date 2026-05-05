@@ -25,19 +25,6 @@ If you want to learn how to customize Renovate's behavior, keep reading!
 
 ## Presets
 
-- `base`: extends [`config:recommended`](https://docs.renovatebot.com/presets-config/#configrecommended),
-  and enables [vulnerability alert](https://docs.renovatebot.com/configuration-options/#vulnerabilityalerts) PRs.
-  Note that to receive vulnerability alert PRs, an admin needs to enable the
-  settings [Dependency graph](https://docs.github.com/en/code-security/concepts/supply-chain-security/about-the-dependency-graph)
-  and [Dependabot alerts](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-security-and-analysis-settings-for-your-repository).
-- `actions`: enables GitHub Actions updates, pinning action digests to SemVer-compatible refs.
-  All GitHub Actions updates are grouped into a single PR and scheduled weekly.
-- `lockfile`: enables weekly lock file updates (e.g. `cargo update`) and disables
-  PRs for non-breaking updates for Rust, JavaScript, and Python ecosystem packages.
-  This is because lock file updates already include non-breaking updates.
-  Breaking updates (e.g. `1.2.3` to `2.0.0`) are updated into separate PRs.
-- `default`: This is the recommended preset for most repositories in the Rust Project.
-
 Here's a diagram of the presets and how they extend each other
 (e.g. `default` extends both `actions` and `lockfile`):
 
@@ -49,6 +36,29 @@ graph TD
     actions --> default["default"]
     lockfile --> default
 ```
+
+### `base`
+
+Extends [`config:recommended`](https://docs.renovatebot.com/presets-config/#configrecommended),
+and enables [vulnerability alert](https://docs.renovatebot.com/configuration-options/#vulnerabilityalerts) PRs.
+
+Note that to receive vulnerability alert PRs, an admin needs to enable the
+settings [Dependency graph](https://docs.github.com/en/code-security/concepts/supply-chain-security/about-the-dependency-graph)
+and [Dependabot alerts](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-security-and-analysis-settings-for-your-repository).
+
+### `actions`
+
+Enables GitHub Actions updates, pinning action digests to SemVer-compatible refs.
+All GitHub Actions updates are grouped into a single PR and scheduled weekly.
+
+### `lockfile`
+
+Enables weekly lock file updates (e.g. `cargo update`) and disables PRs for non-breaking updates for Rust, JavaScript, and Python ecosystem packages.
+This is because lock file updates already include non-breaking updates. Breaking updates (e.g. `1.2.3` to `2.0.0`) are updated into separate PRs.
+
+### `default`
+
+This is the recommended preset for most repositories in the Rust Project.
 
 ## Use a preset in a Repository
 
