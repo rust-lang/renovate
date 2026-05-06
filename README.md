@@ -82,6 +82,25 @@ To use a different preset (e.g. `actions`), add the following to your Renovate c
 Presets won't work for all repositories. You can adopt them and customize them in your
 repository by overriding specific configuration options.
 
+### Disable PRs for breaking changes
+
+The [`lockfile`](#lockfile) and the [`default`](#default) presets disable PRs for non-breaking updates,
+updating them in the lockfile maintenance PR instead.
+
+You will still get one PR for every update to a new incompatible version (e.g. `0.1.2` to `0.2.0`).
+If you want to disable also these PRs, you can use
+[`matchJsonata`](https://docs.renovatebot.com/configuration-options/#packagerulesmatchjsonata) in your configuration file:
+
+```json
+"packageRules": [
+  {
+    "matchCategories": ["rust", "js", "python"],
+    "matchJsonata": ["isBreaking == true"],
+    "enabled": false
+  }
+]
+```
+
 ### Schedule
 
 Both the `actions` and `lockfile` presets default to Renovate's
