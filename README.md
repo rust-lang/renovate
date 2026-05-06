@@ -3,11 +3,11 @@
 Shared [Renovate](https://docs.renovatebot.com/) presets for repositories in the Rust Project, maintained
 by the Infrastructure Team.
 
-To know more about Renovate and how to use it in repositories of the Rust Project, see the
+To learn more about Renovate and how to use it in Rust Project repositories, see the
 [Rust Forge documentation](https://forge.rust-lang.org/infra/docs/renovate.html).
 
 > [!WARNING]
-> These presets are intended for use within the Rust Project and we don't support their use outside of it.
+> These presets are intended for use within the Rust Project. We don't support using them outside it.
 
 ## Quickstart
 
@@ -39,10 +39,10 @@ graph TD
 
 ### `base`
 
-Extends [`config:recommended`](https://docs.renovatebot.com/presets-config/#configrecommended),
+Extends [`config:recommended`](https://docs.renovatebot.com/presets-config/#configrecommended)
 and enables [vulnerability alert](https://docs.renovatebot.com/configuration-options/#vulnerabilityalerts) PRs.
 
-This preset keeps the default behavior of Renovate: raise one PR per dependency update.
+This preset keeps Renovate's default behavior: raising one PR per dependency update.
 If you think this is too noisy, have a look at the other presets and the [personalization](#personalization) section below.
 
 > [!NOTE]
@@ -57,14 +57,14 @@ All GitHub Actions updates are grouped into a single PR and scheduled weekly.
 
 ### `lockfile`
 
-Enables weekly lock file updates (e.g. `cargo update`) and disables PRs for non-breaking updates for Rust, JavaScript, and Python ecosystem packages.
-This is because lock file updates already include non-breaking updates. Breaking updates (e.g. `1.2.3` to `2.0.0`) are updated into separate PRs.
+Enables weekly lock file updates (e.g. `cargo update`) and disables PRs for non-breaking updates to Rust, JavaScript, and Python ecosystem packages.
+This is because lock file updates already include non-breaking updates. Breaking updates (e.g. `1.2.3` to `2.0.0`) are handled in separate PRs.
 
 ### `default`
 
 This is the recommended preset for most repositories in the Rust Project.
 
-## Use a preset in a Repository
+## Use a preset in a repository
 
 The [quickstart](#quickstart) section above shows how to use the `default` preset in a repository.
 
@@ -79,16 +79,16 @@ To use a different preset (e.g. `actions`), add the following to your Renovate c
 
 ## Personalization
 
-Presets won't work for all repositories. You can adopt them and customize them in your
+Presets won't work for every repository. You can adopt them and customize them in your
 repository by overriding specific configuration options.
 
 ### Disable PRs for breaking changes
 
 The [`lockfile`](#lockfile) and the [`default`](#default) presets disable PRs for non-breaking updates,
-updating them in the lockfile maintenance PR instead.
+updating them in the lock file maintenance PR instead.
 
 You will still get one PR for every update to a new incompatible version (e.g. `0.1.2` to `0.2.0`).
-If you want to disable also these PRs, you can use
+If you also want to disable these PRs, you can use
 [`matchJsonata`](https://docs.renovatebot.com/configuration-options/#packagerulesmatchjsonata) in your configuration file:
 
 ```json
@@ -105,7 +105,7 @@ If you want to disable also these PRs, you can use
 
 Both the `actions` and `lockfile` presets default to Renovate's
 [`schedule:weekly`](https://docs.renovatebot.com/presets-schedule/#scheduleweekly)
-preset, which resolves to Monday before 4 AM.
+preset, which resolves to before 4 AM on Monday.
 
 To override them in a repository:
 
@@ -126,7 +126,7 @@ To override them in a repository:
 ```
 
 > [!NOTE]
-> `schedule:monthly` means *"on the first day of the month, before 4AM"*.
+> `schedule:monthly` means *"on the first day of the month, before 4 AM"*.
 > See the [Schedule Presets](https://docs.renovatebot.com/presets-schedule/#schedulemonthly) documentation for more details.
 
 ### Minimum release age
@@ -140,9 +140,9 @@ option allows you to specify a minimum age for releases before Renovate consider
 }
 ```
 
-We didn't set it as default because:
+We didn't set it by default because:
 
-* You could miss security updates. If a GitHub repository isn't setup correctly
+* You could miss security updates. If a GitHub repository isn't set up correctly
   or a security vulnerability isn't properly reported, Renovate won't update
   to the latest patched version.
 * It could be confusing for maintainers.
@@ -152,7 +152,7 @@ We might enable this option in the future.
 ### Automerge
 
 The [automerge](https://docs.renovatebot.com/configuration-options/#automerge)
-option tells renovate to automatically merge PRs when CI checks pass and there are no conflicts.
+option tells Renovate to automatically merge PRs when CI checks pass and there are no conflicts.
 
 ```json5
 {
@@ -162,13 +162,13 @@ option tells renovate to automatically merge PRs when CI checks pass and there a
 
 > [!NOTE]
 > The `automerge` option is only available in the `renovate` GitHub App.
-> If you use `forking-renovate`, this option is not available. See the [forge](https://forge.rust-lang.org/infra/docs/renovate.html?highlight=renovate#1-install-the-renovate-github-app) for more details.
+> If you use `forking-renovate`, this option is not available. See the [Forge](https://forge.rust-lang.org/infra/docs/renovate.html?highlight=renovate#1-install-the-renovate-github-app) for more details.
 
 Automerge is disabled by default.
 
 ### Security only updates
 
-To disable any update except security ones, you can use
+To disable all updates except security updates, you can use
 [`matchPackageNames`](https://docs.renovatebot.com/configuration-options/#packagerulesmatchpackagenames)
 in your configuration file:
 
@@ -190,7 +190,7 @@ in your configuration file:
 
 Alternatively, you can disable only certain [categories](https://docs.renovatebot.com/modules/manager/#supported-managers)
 using [`matchCategories`](https://docs.renovatebot.com/configuration-options/#packagerulesmatchcategories).
-E.g. to disable updates for Rust and Javascript:
+For example, to disable updates for Rust and JavaScript:
 
 ```json5
 {
@@ -207,7 +207,7 @@ E.g. to disable updates for Rust and Javascript:
 
 > [!NOTE]
 > Some projects won't report their security vulnerabilities.
-> So we recommend keeping dependencies up to date, without relying only on security updates.
+> We therefore recommend keeping dependencies up to date without relying only on security updates.
 
 ## References
 
