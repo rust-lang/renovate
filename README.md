@@ -55,6 +55,10 @@ If you think this is too noisy, have a look at the other presets and the [person
 Enables GitHub Actions updates, pinning action digests to SemVer-compatible refs.
 All GitHub Actions updates are grouped into a single PR and scheduled weekly.
 
+> [!NOTE]
+> Workflows (ending in `.yml`) from `rust-lang/josh-sync` which are already set
+> to track the `main` branch are ignored.
+
 ### `lockfile`
 
 Enables weekly lock file updates (e.g. `cargo update`) and disables PRs for non-breaking updates to Rust, JavaScript, and Python ecosystem packages.
