@@ -10,6 +10,13 @@
       "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions",
       "extends": ["schedule:weekly"]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchDepTypes": ["workflow"],
+      "matchPackageNames": ["rust-lang/josh-sync"],
+      "matchCurrentValue": "main",
+      "enabled": false
     }
   ]
 }
