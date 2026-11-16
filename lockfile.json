@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Weekly lock file maintenance and suppression of non-breaking Rust, JavaScript, and Python update PRs.",
+  "description": "Weekly lock file maintenance and suppression of non-breaking Rust, JavaScript, and Python update PRs, except for stable Rust toolchain updates.",
   "extends": ["github>rust-lang/renovate:base"],
   "lockFileMaintenance": {
     "enabled": true,
@@ -9,7 +9,14 @@
   "packageRules": [
     {
       "matchCategories": ["rust", "js", "python"],
+      "matchManagers": ["!rust-toolchain"],
       "matchJsonata": ["isBreaking != true"],
+      "enabled": false
+    },
+    {
+      "description": "Only update stable Rust toolchains like 1.100.0. Dated nightlies would get a PR updated every day.",
+      "matchManagers": ["rust-toolchain"],
+      "matchCurrentValue": "!/^\\d+\\.\\d+(\\.\\d+)?$/",
       "enabled": false
     }
   ]

@@ -59,6 +59,8 @@ All GitHub Actions updates are grouped into a single PR and scheduled weekly.
 
 Enables weekly lock file updates (e.g. `cargo update`) and disables PRs for non-breaking updates to Rust, JavaScript, and Python ecosystem packages.
 This is because lock file updates already include non-breaking updates. Breaking updates (e.g. `1.2.3` to `2.0.0`) are handled in separate PRs.
+Stable Rust toolchain updates (e.g. `1.100.0` to `1.101.0` in `rust-toolchain.toml`) also get their own PRs, because lock file updates don't change the toolchain file.
+Other toolchain pins, such as dated nightlies, don't get PRs.
 
 ### `default`
 
@@ -86,6 +88,7 @@ repository by overriding specific configuration options.
 
 The [`lockfile`](#lockfile) and the [`default`](#default) presets disable PRs for non-breaking updates,
 updating them in the lock file maintenance PR instead.
+Stable Rust toolchain updates are an exception, see [Disable Rust toolchain updates](#disable-rust-toolchain-updates).
 
 You will still get one PR for every update to a new incompatible version (e.g. `0.1.2` to `0.2.0`).
 If you also want to disable these PRs, you can use
@@ -99,6 +102,22 @@ If you also want to disable these PRs, you can use
     "enabled": false
   }
 ]
+```
+
+### Disable Rust toolchain updates
+
+The [`lockfile`](#lockfile) and the [`default`](#default) presets raise PRs for stable Rust toolchain updates.
+If your repository intentionally stays on an older Rust version, you can disable these PRs in your configuration file:
+
+```json5
+{
+  "packageRules": [
+    {
+      "matchManagers": ["rust-toolchain"],
+      "enabled": false,
+    },
+  ],
+}
 ```
 
 ### Schedule
